@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}" />
+        <g:set var="layoutName" value="${grailsApplication.config.getProperty("quartz.monitor.layout")}" />
         <meta name="layout" content="${layoutName ?: 'main'}" />
         <title>Quartz Jobs</title>
         <asset:javascript src="quartz-monitor.js"/>
@@ -42,7 +42,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <g:if test="${grailsApplication.config.quartz.monitor.showTriggerNames}">
+                            <g:if test="${grailsApplication.config.getProperty("quartz.monitor.showTriggerNames", Boolean.class)}">
                                 <th>Trigger Name</th>
                             </g:if>
                             <th>Last Run</th>
@@ -55,7 +55,7 @@
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${job.name}</td>
-                            <g:if test="${grailsApplication.config.quartz.monitor.showTriggerNames}">
+                            <g:if test="${grailsApplication.config.getProperty("quartz.monitor.showTriggerNames", Boolean.class)}">
                                 <td>${job.trigger?.name}</td>
                             </g:if>
                             <g:set var="tooltip">${(job.error ? "Job threw exception: " + job.error + ". " : "") + (job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : "")}</g:set>

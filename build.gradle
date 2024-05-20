@@ -22,7 +22,7 @@ ext {
 
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.toVersion("17")
 }
 
 
@@ -59,7 +59,7 @@ dependencies {
     implementation "org.grails:grails-console"
 }
 application {
-    mainClass.set("grails.cc.upgrade.sample.Application")
+    mainClass.set("quartz.monitor.Application")
 }
 bootRun {
     ignoreExitValue true
