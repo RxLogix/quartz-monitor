@@ -3,7 +3,7 @@ package grails.plugins.quartzmonitor
 import grails.plugins.quartz.QuartzMonitorJobFactory
 
 class QuartzMonitorGrailsPlugin {
-    def grailsVersion = "1.3 > *"
+    def grailsVersion = "5.3.6 > *"
 
     def author = "James Cook"
     def authorEmail = "grails@jamescookie.com"
