@@ -1,40 +1,30 @@
-buildscript {
-    ext {
-        grailsVersion = project.grailsVersion
-    }
-    repositories {
-        mavenLocal()
-        maven { url "https://repo.grails.org/grails/core" }
-    }
-    dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.4.7"
-    }
-}
+
 
 plugins {
-    id "io.spring.dependency-management" version "0.5.2.RELEASE"
-    id "com.jfrog.bintray" version "1.5"
+    id "groovy"
+    id "idea"
+    id "org.grails.grails-web"
+    id "org.grails.grails-gsp"
+    id "org.grails.grails-plugin"
+    id "application"
+    id "eclipse"
+    id "maven-publish"
+    id "asset-pipeline"
+    id "java-library"
 }
 
-version "5.x-M1"
-group "org.grails.plugins"
 
-apply plugin: 'maven-publish'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: "asset-pipeline"
-apply plugin: "org.grails.grails-plugin"
-apply plugin: "org.grails.grails-gsp"
-apply plugin: "java-library"
+group = "org.grails.plugins"
 
 ext {
     grailsVersion = project.grailsVersion
 }
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+}
+
 
 
 repositories {
@@ -48,6 +38,10 @@ dependencyManagement {
         mavenBom "org.grails:grails-bom:$grailsVersion"
     }
     applyMavenExclusions false
+}
+configurations {
+    all {
+    }
 }
 
 dependencies {
@@ -64,7 +58,9 @@ dependencies {
     implementation "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
     implementation "org.grails:grails-console"
 }
-
+application {
+    mainClass.set("grails.cc.upgrade.sample.Application")
+}
 bootRun {
     ignoreExitValue true
     jvmArgs(
