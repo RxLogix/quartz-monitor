@@ -13,19 +13,19 @@ class QuartzController {
 
     Scheduler quartzScheduler
 
-    def index = {
+    def index() {
         redirect(action: "list")
     }
 
-    def list = {
+    def list() {
         def jobsList = []
         def listJobGroups = quartzScheduler.jobGroupNames
-        listJobGroups?.each {jobGroup ->
-            quartzScheduler.getJobKeys(jobGroupEquals(jobGroup))?.each {jobKey ->
+        listJobGroups?.each { jobGroup ->
+            quartzScheduler.getJobKeys(jobGroupEquals(jobGroup))?.each { jobKey ->
                 def jobName = jobKey.name
                 List<Trigger> triggers = quartzScheduler.getTriggersOfJob(jobKey)
                 if (triggers) {
-                    triggers.each {trigger ->
+                    triggers.each { trigger ->
                         def currentJob = createJob(jobGroup, jobName, jobsList, trigger.key.name)
                         currentJob.trigger = trigger
                         def state = quartzScheduler.getTriggerState(trigger.key)
@@ -47,9 +47,9 @@ class QuartzController {
         return currentJob
     }
 
-    def stop = {
+    def stop() {
         def triggerKeys = quartzScheduler.getTriggerKeys(GroupMatcher.triggerGroupEquals(params.triggerGroup))
-        def key = triggerKeys?.find {it.name == params.triggerName}
+        def key = triggerKeys?.find { it.name == params.triggerName }
         if (key) {
             def trigger = quartzScheduler.getTrigger(key)
             if (trigger) {
@@ -64,7 +64,7 @@ class QuartzController {
         redirect(action: "list")
     }
 
-    def start = {
+    def start() {
         def trigger = triggers[params.jobName]
         if (trigger) {
             quartzScheduler.scheduleJob(trigger)
@@ -74,9 +74,9 @@ class QuartzController {
         redirect(action: "list")
     }
 
-    def pause = {
+    def pause() {
         def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
-        def key = jobKeys?.find {it.name == params.jobName}
+        def key = jobKeys?.find { it.name == params.jobName }
         if (key) {
             quartzScheduler.pauseJob(key)
         } else {
@@ -85,9 +85,9 @@ class QuartzController {
         redirect(action: "list")
     }
 
-    def resume = {
+    def resume() {
         def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
-        def key = jobKeys?.find {it.name == params.jobName}
+        def key = jobKeys?.find { it.name == params.jobName }
         if (key) {
             quartzScheduler.resumeJob(key)
         } else {
@@ -96,9 +96,9 @@ class QuartzController {
         redirect(action: "list")
     }
 
-    def runNow = {
+    def runNow() {
         def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
-        def key = jobKeys?.find {it.name == params.jobName}
+        def key = jobKeys?.find { it.name == params.jobName }
         if (key) {
             quartzScheduler.triggerJob(key)
         } else {
@@ -107,17 +107,17 @@ class QuartzController {
         redirect(action: "list")
     }
 
-    def startScheduler = {
+    def startScheduler() {
         quartzScheduler.start()
         redirect(action: "list")
     }
 
-    def stopScheduler = {
+    def stopScheduler() {
         quartzScheduler.standby()
         redirect(action: "list")
     }
 
-    def editCronTrigger = {
+    def editCronTrigger() {
         def trigger = quartzScheduler.getTrigger(new TriggerKey(params.triggerName, params.triggerGroup))
         if (!(trigger instanceof CronTrigger)) {
             flash.message = "This trigger is not a cron trigger"
@@ -127,7 +127,7 @@ class QuartzController {
         [trigger: trigger]
     }
 
-    def saveCronTrigger = {
+    def saveCronTrigger() {
         if (!params.triggerName || !params.triggerGroup) {
             flash.message = "Invalid trigger parameters"
             redirect(action: "list")
