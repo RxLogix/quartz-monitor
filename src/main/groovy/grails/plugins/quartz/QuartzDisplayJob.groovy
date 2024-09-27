@@ -1,6 +1,7 @@
 package grails.plugins.quartz
 
 import grails.plugins.GrailsVersionUtils
+import groovy.util.logging.Slf4j
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
@@ -8,6 +9,7 @@ import org.quartz.JobExecutionException
 /**
  * Invokes execute() on the GrailsTaskClassJob instance whilst recording the time.
  */
+@Slf4j
 class QuartzDisplayJob implements Job {
     GrailsJobFactory.GrailsJob job
     Map<String, Object> jobDetails

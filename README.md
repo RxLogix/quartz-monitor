@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.Rxlogix:quartz-monitor:6.0-jdk11-M2'
+    compile 'com.github.Rxlogix:quartz-monitor:6.0-jdk11-M3'
 }
 ```
 
